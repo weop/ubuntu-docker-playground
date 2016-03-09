@@ -11,7 +11,7 @@ to work on containers using this machine, the environment variable DOCKER_HOST n
 export DOCKER_HOST=tcp://192.168.10.10:2375
 ```
 
-osx users can use obtain docker from brew.
+osx users can obtain docker from homebrew.
 ```
 brew install docker
 ```
