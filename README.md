@@ -16,7 +16,7 @@ osx users can obtain docker from homebrew.
 brew install docker
 ```
 
-...and run then run pretty much anything the docker client.
+...and run then run pretty much anything you would with a docker client.
 ```
 docker run busybox echo Hello, World!
 ```
