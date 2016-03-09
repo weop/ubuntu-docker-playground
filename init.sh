@@ -17,10 +17,16 @@ echo "Installing Docker..."
 sudo apt-get install docker-engine -y
 echo "Running Post-Install Tasks"
 
-#Ubuntu 15.04
-#sudo systemctl enable docker
+
 sudo usermod -aG docker vagrant
-echo "Starting Docker Daemon..."
-sudo /usr/bin/docker daemon -H tcp://0.0.0.0:2375 \
--H unix:///var/run/docker.sock \
-> /dev/null &
+if [ -f "/etc/init.d/ddaemon" ]; then
+  sudo rm /etc/init.d/ddaemon
+  echo "Removed existing ddaemon..."
+fi
+sudo cp /home/vagrant/.ddaemon.sh /etc/init.d/ddaemon
+sudo chown root:root /etc/init.d/ddaemon
+sudo chmod 755 /etc/init.d/ddaemon
+sudo touch /var/log/ddaemon.log
+sudo update-rc.d ddaemon defaults > /dev/null &
+sudo update-rc.d ddaemon enable > /dev/null &
+echo "Rebooting Docker Host Daemon..."

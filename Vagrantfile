@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "1024"]
   end
 
-  #boxinfo
+  #networking
   config.vm.box = "ubuntu/trusty64"
   config.vm.hostname = "dock3r.localhost"
   config.vm.network :private_network, ip: "192.168.10.10"
@@ -15,10 +15,13 @@ Vagrant.configure("2") do |config|
   #config.vm.network :forwarded_port, host: 8080, guest: 80, auto_correct: true
   config.vm.network :forwarded_port, host: 2375, guest: 2375, auto_correct: true
 
+  config.vm.provision "file", source: "./ddaemon.sh", destination: "~/.ddaemon.sh"
+
   #starts provision
   config.vm.provision "run", type: "shell" do |s|
-  #  s.privileged = false
     s.path = "init.sh"
   end
+
+  config.vm.provision "shell", inline: "sudo reboot"
 
 end
